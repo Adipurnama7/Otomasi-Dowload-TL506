@@ -24,6 +24,11 @@ Format nama file Excel tetap `TL506_YYYY-MM-DD_KODEBRANCH.xlsx`.
 
 Jika browser Chromium Playwright belum tersedia di server, aplikasi akan
 mengunduhnya saat pertama kali proses unduh dijalankan. Pastikan server
-memiliki akses internet saat itu. Untuk menghindari pengunduhan saat runtime,
-jalankan `python -m playwright install chromium` pada tahap build/deployment
-setelah memasang dependency dari `requirements.txt`.
+memiliki akses internet saat itu. Pustaka sistem Chromium untuk Streamlit
+Community Cloud tercantum di `packages.txt` dan akan dipasang saat deployment.
+Browser berjalan dalam mode headless pada Linux; di Windows tetap terbuka
+seperti biasa.
+
+Untuk menghindari pengunduhan browser saat runtime, jalankan
+`python -m playwright install chromium` pada tahap build/deployment setelah
+memasang dependency dari `requirements.txt`.

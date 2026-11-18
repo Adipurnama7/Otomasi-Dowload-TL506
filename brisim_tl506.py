@@ -1,3 +1,4 @@
+import os
 import re
 import subprocess
 import sys
@@ -104,7 +105,7 @@ class TL506Downloader:
                 )
         self.context = self.playwright.chromium.launch_persistent_context(
             user_data_dir=str(PROFILE_DIR),
-            headless=False,
+            headless=os.name != "nt",
             accept_downloads=True,
         )
         self.page = (
