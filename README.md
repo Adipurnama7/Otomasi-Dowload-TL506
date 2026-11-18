@@ -19,3 +19,11 @@ menekan **Setuju** dan menunggu dialog tertutup. Setelah proses selesai, klik
 Browser mengunduh satu file ZIP bernama `TL506_DD_MM_YYYY.zip`. Setelah
 ekstrak, ZIP berisi folder `TL506_DD_MM_YYYY` beserta file Excel per branch.
 Format nama file Excel tetap `TL506_YYYY-MM-DD_KODEBRANCH.xlsx`.
+
+## Deployment
+
+Jika browser Chromium Playwright belum tersedia di server, aplikasi akan
+mengunduhnya saat pertama kali proses unduh dijalankan. Pastikan server
+memiliki akses internet saat itu. Untuk menghindari pengunduhan saat runtime,
+jalankan `python -m playwright install chromium` pada tahap build/deployment
+setelah memasang dependency dari `requirements.txt`.

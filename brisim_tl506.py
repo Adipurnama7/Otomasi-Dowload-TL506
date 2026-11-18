@@ -1,4 +1,6 @@
 import re
+import subprocess
+import sys
 import time
 from datetime import date
 from pathlib import Path
@@ -77,6 +79,29 @@ class TL506Downloader:
     def buka(self, status_callback=None):
         PROFILE_DIR.mkdir(parents=True, exist_ok=True)
         self.playwright = sync_playwright().start()
+        if not Path(self.playwright.chromium.executable_path).is_file():
+            if status_callback:
+                status_callback(
+                    "Chromium Playwright belum tersedia. "
+                    "Mengunduh browser untuk lingkungan ini..."
+                )
+            installation = subprocess.run(
+                [sys.executable, "-m", "playwright", "install", "chromium"],
+                capture_output=True,
+                text=True,
+                check=False,
+            )
+            if installation.returncode:
+                details = (
+                    installation.stderr.strip()
+                    or installation.stdout.strip()
+                    or "Tidak ada detail dari installer Playwright."
+                )
+                raise RuntimeError(
+                    "Gagal memasang Chromium Playwright. "
+                    "Pastikan server dapat mengakses internet saat pertama "
+                    f"kali menjalankan aplikasi.\n{details}"
+                )
         self.context = self.playwright.chromium.launch_persistent_context(
             user_data_dir=str(PROFILE_DIR),
             headless=False,
